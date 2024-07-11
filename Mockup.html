@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun Environment Monitoring Tool</title>
+    <title>Environment Monitoring Tool</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #6200ee;
+            --primary-variant: #3700b3;
+            --secondary-color: #03dac6;
+            --background: #ffffff;
+            --surface: #ffffff;
+            --error: #b00020;
+            --on-primary: #ffffff;
+            --on-secondary: #000000;
+            --on-background: #000000;
+            --on-surface: #000000;
+            --on-error: #ffffff;
+        }
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -14,12 +27,13 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
-            background-color: #f0f8ff;
+            background-color: var(--background);
+            color: var(--on-background);
             transition: background-color 0.5s;
         }
         .header {
-            background-color: #6a5acd;
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--on-primary);
             padding: 16px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             text-align: center;
@@ -30,7 +44,7 @@
         }
         .sidebar {
             width: 240px;
-            background-color: #e6e6fa;
+            background-color: var(--surface);
             padding: 16px;
             transition: width 0.3s;
         }
@@ -48,21 +62,21 @@
             display: flex;
             align-items: center;
             padding: 12px 16px;
-            color: #4b0082;
+            color: var(--on-surface);
             text-decoration: none;
             transition: all 0.3s;
             border-radius: 8px;
             margin-bottom: 8px;
         }
         .menu-item:hover {
-            background-color: #d8bfd8;
-            transform: scale(1.05);
+            background-color: var(--secondary-color);
+            color: var(--on-secondary);
         }
         .menu-item i {
             margin-right: 16px;
         }
         .card {
-            background-color: white;
+            background-color: var(--surface);
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             margin-bottom: 24px;
@@ -88,16 +102,13 @@
             transition: all 0.5s;
         }
         .status-good {
-            background-color: #32cd32;
-            box-shadow: 0 0 8px #32cd32;
+            background-color: #4caf50;
         }
         .status-warning {
-            background-color: #ffa500;
-            box-shadow: 0 0 8px #ffa500;
+            background-color: #ff9800;
         }
         .status-error {
-            background-color: #ff4500;
-            box-shadow: 0 0 8px #ff4500;
+            background-color: var(--error);
         }
         .card:hover .status-indicator {
             transform: scale(1.2);
@@ -106,8 +117,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #ff69b4;
-            color: white;
+            background-color: var(--secondary-color);
+            color: var(--on-secondary);
             border: none;
             padding: 10px 20px;
             border-radius: 20px;
@@ -127,83 +138,83 @@
 </head>
 <body>
     <header class="header">
-        <h1>🚀 Super Fun Environment Monitor 🎉</h1>
+        <h1>Environment Monitoring Tool</h1>
     </header>
     <div class="content">
         <nav class="sidebar">
             <a href="#" class="menu-item">
                 <i class="material-icons">dashboard</i>
-                Mission Control
+                Dashboard
             </a>
             <a href="#" class="menu-item">
                 <i class="material-icons">settings</i>
-                Toolkit
+                Configuration
             </a>
             <a href="#" class="menu-item">
                 <i class="material-icons">history</i>
-                Time Machine
+                Deployment History
             </a>
             <a href="#" class="menu-item">
                 <i class="material-icons">notifications</i>
-                Alerts Central
+                Alerts
             </a>
         </nav>
         <main class="main">
             <div class="card">
-                <h2>🧪 Dev Lab</h2>
+                <h2>Development Environment</h2>
                 <div class="env-status">
                     <span class="status-indicator status-good"></span>
-                    <span>Build Status: Rock Solid!</span>
+                    <span>Build Status: Successful</span>
                 </div>
                 <div class="env-status">
                     <span class="status-indicator status-good"></span>
-                    <span>Release Status: Launched! 🚀</span>
+                    <span>Release Status: Deployed v2.3.1</span>
                 </div>
                 <div class="env-status">
                     <span class="status-indicator status-good"></span>
-                    <span>Services: Ready to Roll!</span>
+                    <span>Services: All Operational</span>
                 </div>
-                <p>Purpose: Where the magic happens! 🧙‍♂️✨</p>
+                <p>Purpose: Feature development and integration testing.</p>
             </div>
             <div class="card">
-                <h2>🎭 Staging Arena</h2>
+                <h2>Staging Environment</h2>
                 <div class="env-status">
                     <span class="status-indicator status-warning"></span>
-                    <span>Build Status: Cooking... 👨‍🍳</span>
+                    <span>Build Status: In Progress</span>
                 </div>
                 <div class="env-status">
                     <span class="status-indicator status-warning"></span>
-                    <span>Release Status: Almost there!</span>
+                    <span>Release Status: Pending v2.3.2</span>
                 </div>
                 <div class="env-status">
                     <span class="status-indicator status-good"></span>
-                    <span>Services: Ready for action!</span>
+                    <span>Services: All Operational</span>
                 </div>
-                <p>Purpose: Our dress rehearsal stage! 🎭</p>
+                <p>Purpose: Pre-production testing and client demos.</p>
             </div>
             <div class="card">
-                <h2>🌍 Prod World</h2>
+                <h2>Production Environment</h2>
                 <div class="env-status">
                     <span class="status-indicator status-good"></span>
-                    <span>Build Status: Unbreakable!</span>
+                    <span>Build Status: Stable</span>
                 </div>
                 <div class="env-status">
                     <span class="status-indicator status-good"></span>
-                    <span>Release Status: Live and kicking!</span>
+                    <span>Release Status: v2.3.0 Live</span>
                 </div>
                 <div class="env-status">
                     <span class="status-indicator status-good"></span>
-                    <span>Services: Smooth sailing! ⛵</span>
+                    <span>Services: All Operational</span>
                 </div>
-                <p>Purpose: Where dreams come true! 🌈</p>
+                <p>Purpose: Live environment for end-users.</p>
             </div>
         </main>
     </div>
-    <button class="fun-mode" onclick="toggleFunMode()">Toggle Fun Mode</button>
+    <button class="fun-mode" onclick="toggleFunMode()">Toggle Enhanced View</button>
     <script>
         function toggleFunMode() {
             document.body.style.backgroundColor = 
-                document.body.style.backgroundColor === 'rgb(240, 248, 255)' ? '#ffe4e1' : '#f0f8ff';
+                document.body.style.backgroundColor === 'rgb(255, 255, 255)' ? '#f3e5f5' : '#ffffff';
             
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
