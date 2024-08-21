@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Management Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .grid-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .grid-actions button {
+            background-color: #03a9f4;
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .grid-actions button:hover {
+            background-color: #0288d1;
+        }
+
+        .grid-actions .material-icons {
+            margin-right: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1f1f1f;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #424242;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        table tr:nth-child(odd) {
+            background-color: #1f1f1f;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination button {
+            background-color: #03a9f4;
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .pagination button:hover {
+            background-color: #0288d1;
+        }
+
+        .delete-btn {
+            color: #f44336;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            text-decoration: underline;
+        }
+
+        .material-icons {
+            vertical-align: middle;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        Data Management Dashboard
+    </div>
+
+    <div class="container">
+        <div class="grid-actions">
+            <button id="add-line-btn">
+                <span class="material-icons">add</span>
+                Add New Line
+            </button>
+            <button id="upload-btn">
+                <span class="material-icons">upload_file</span>
+                Upload Excel
+            </button>
+        </div>
+
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example rows -->
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td contenteditable="true">John Doe</td>
+                    <td contenteditable="true">john@example.com</td>
+                    <td contenteditable="true">123-456-7890</td>
+                    <td contenteditable="true">123 Main St.</td>
+                    <td contenteditable="true">2024-08-20</td>
+                    <td contenteditable="true">Active</td>
+                    <td><span class="delete-btn material-icons">delete</span></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td contenteditable="true">Jane Smith</td>
+                    <td contenteditable="true">jane@example.com</td>
+                    <td contenteditable="true">987-654-3210</td>
+                    <td contenteditable="true">456 Elm St.</td>
+                    <td contenteditable="true">2024-08-20</td>
+                    <td contenteditable="true">Inactive</td>
+                    <td><span class="delete-btn material-icons">delete</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button>&laquo; Previous</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Next &raquo;</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to add a new line
+        document.getElementById('add-line-btn').addEventListener('click', function() {
+            const table = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            // Adding cells and contenteditable fields
+            const selectCell = newRow.insertCell(0);
+            selectCell.innerHTML = '<input type="checkbox">';
+
+            const nameCell = newRow.insertCell(1);
+            nameCell.contentEditable = "true";
+            nameCell.innerText = "New Name";
+
+            const emailCell = newRow.insertCell(2);
+            emailCell.contentEditable = "true";
+            emailCell.innerText = "new@example.com";
+
+            const phoneCell = newRow.insertCell(3);
+            phoneCell.contentEditable = "true";
+            phoneCell.innerText = "000-000-0000";
+
+            const addressCell = newRow.insertCell(4);
+            addressCell.contentEditable = "true";
+            addressCell.innerText = "New Address";
+
+            const dateCell = newRow.insertCell(5);
+            dateCell.contentEditable = "true";
+            dateCell.innerText = "2024-08-20";
+
+            const statusCell = newRow.insertCell(6);
+            statusCell.contentEditable = "true";
+            statusCell.innerText = "Status";
+
+            const actionCell = newRow.insertCell(7);
+            actionCell.innerHTML = '<span class="delete-btn material-icons">delete</span>';
+
+            // Add event listener to the new delete button
+            actionCell.querySelector('.delete-btn').addEventListener('click', function() {
+                table.deleteRow(newRow.rowIndex - 1);
+            });
+        });
+
+        // Add event listeners to existing delete buttons
+        document.querySelectorAll('.delete-btn').forEach(function(deleteBtn) {
+            deleteBtn.addEventListener('click', function() {
+                const row = deleteBtn.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+            });
+        });
+    </script>
+
+</body>
+</html>
