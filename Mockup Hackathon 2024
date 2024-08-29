@@ -3,229 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Management Dashboard</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Offering Sheet</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #000;
             margin: 0;
             padding: 0;
+            background-color: #fff;
         }
-
-        .header {
-            background-color: #1f1f1f;
-            color: #ffffff;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .container {
-            padding: 20px;
-        }
-
-        .grid-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .grid-actions button {
-            background-color: #03a9f4;
-            color: #ffffff;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-        }
-
-        .grid-actions button:hover {
-            background-color: #0288d1;
-        }
-
-        .grid-actions .material-icons {
-            margin-right: 5px;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: #1f1f1f;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-            border-radius: 4px;
-            overflow: hidden;
         }
-
-        table th, table td {
-            padding: 15px;
+        th, td {
+            border: 1px solid #000;
+            padding: 5px;
             text-align: left;
-            border-bottom: 1px solid #424242;
         }
-
-        table tr:nth-child(even) {
-            background-color: #2a2a2a;
+        .header-table {
+            margin-bottom: 10px;
         }
-
-        table tr:nth-child(odd) {
-            background-color: #1f1f1f;
+        .header-table td {
+            border: none;
+            font-weight: bold;
         }
-
-        .pagination {
-            margin-top: 20px;
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .header-right {
+            text-align: right;
+        }
+        .section-title {
+            font-weight: bold;
+            background-color: #f0f0f0;
             text-align: center;
         }
-
-        .pagination button {
-            background-color: #03a9f4;
-            color: #ffffff;
+        .remarks {
+            height: 100px;
+            vertical-align: top;
+        }
+        .no-border {
             border: none;
-            padding: 10px 15px;
-            margin: 0 5px;
-            cursor: pointer;
-            border-radius: 4px;
         }
-
-        .pagination button:hover {
-            background-color: #0288d1;
+        .small-text {
+            font-size: 10px;
         }
-
-        .delete-btn {
-            color: #f44336;
-            cursor: pointer;
-        }
-
-        .delete-btn:hover {
-            text-decoration: underline;
-        }
-
-        .material-icons {
-            vertical-align: middle;
-            font-size: 20px;
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="header">
-        Data Management Dashboard
-    </div>
+<table class="header-table">
+    <tr>
+        <td rowspan="2"><strong>Crédit Agricole</strong><br>Corporate & Investment Bank</td>
+        <td colspan="2" class="header-right">Date: <span>Aug 29, 2024</span></td>
+    </tr>
+    <tr>
+        <td class="header-right"><strong>Branch:</strong></td>
+        <td class="header-right"><strong>Desk Code:</strong></td>
+    </tr>
+    <tr>
+        <td><strong>Radical:</strong></td>
+        <td><strong>Product Line:</strong></td>
+        <td><strong>Client Name:</strong></td>
+    </tr>
+</table>
 
-    <div class="container">
-        <div class="grid-actions">
-            <button id="add-line-btn">
-                <span class="material-icons">add</span>
-                Add New Line
-            </button>
-            <button id="upload-btn">
-                <span class="material-icons">upload_file</span>
-                Upload Excel
-            </button>
-        </div>
+<table>
+    <thead>
+        <tr>
+            <th>Type of Facilities</th>
+            <th>Secured</th>
+            <th>Unsecured</th>
+            <th>Present O/S</th>
+            <th>New Transactions</th>
+            <th>Authorization Details - F2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Advance</td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td></td>
+            <td></td>
+            <td>1. Short-term:</td>
+        </tr>
+        <tr>
+            <td>MT Loan</td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td></td>
+            <td></td>
+            <td>2. Medium/Long-term:</td>
+        </tr>
+        <tr>
+            <td>Irrevocable L/C</td>
+            <td></td>
+            <td></td>
+            <td>SSTR (9)</td>
+            <td></td>
+            <td rowspan="3">Special Conditions:</td>
+        </tr>
+        <tr>
+            <td>Commercial Paper (C/P)</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Import LC Loan / Import Finance - Usance LC Pay at Sight</td>
+            <td><input type="checkbox"></td>
+            <td></td>
+            <td>SSTR (2)</td>
+            <td></td>
+        </tr>
+        <!-- Continue adding rows as per the Excel mockup -->
+        <tr>
+            <td colspan="4" class="section-title">Total (Present)</td>
+            <td class="section-title">Total (Present + New)</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
 
-        <table id="data-table">
-            <thead>
-                <tr>
-                    <th>Select</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Address</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Example rows -->
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td contenteditable="true">John Doe</td>
-                    <td contenteditable="true">john@example.com</td>
-                    <td contenteditable="true">123-456-7890</td>
-                    <td contenteditable="true">123 Main St.</td>
-                    <td contenteditable="true">2024-08-20</td>
-                    <td contenteditable="true">Active</td>
-                    <td><span class="delete-btn material-icons">delete</span></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td contenteditable="true">Jane Smith</td>
-                    <td contenteditable="true">jane@example.com</td>
-                    <td contenteditable="true">987-654-3210</td>
-                    <td contenteditable="true">456 Elm St.</td>
-                    <td contenteditable="true">2024-08-20</td>
-                    <td contenteditable="true">Inactive</td>
-                    <td><span class="delete-btn material-icons">delete</span></td>
-                </tr>
-            </tbody>
-        </table>
+<!-- Group Line Area -->
+<table>
+    <tr>
+        <td colspan="2" class="section-title">Group Line - F1:</td>
+        <td class="section-title"></td>
+        <td class="section-title">Total (Present + New):</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="2" class="section-title">Group Total O/S:</td>
+        <td colspan="3"></td>
+    </tr>
+</table>
 
-        <div class="pagination">
-            <button>&laquo; Previous</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>Next &raquo;</button>
-        </div>
-    </div>
+<!-- Details of New Transactions -->
+<table>
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Length (days)</th>
+            <th>Client Rate / Fee</th>
+            <th>Funding Cost</th>
+            <th>Remarks</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td rowspan="3" class="remarks"></td>
+        </tr>
+    </tbody>
+</table>
 
-    <script>
-        // Function to add a new line
-        document.getElementById('add-line-btn').addEventListener('click', function() {
-            const table = document.getElementById('data-table').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
+<!-- Remarks Section -->
+<table>
+    <tr>
+        <td colspan="8" class="section-title">Remarks</td>
+    </tr>
+    <tr>
+        <td colspan="8" class="remarks">
+            <ul>
+                <li>Spread/Fee</li>
+                <li>Line Drawing Tenor:</li>
+                <li>FA Line No.</li>
+                <li>Commitment Type:</li>
+                <li>The maturity date of the credit line:</li>
+                <li>COMBO NIR Rule(for Floating Rate Loans)</li>
+                <li>Final Maturity Date(for MT/LT Loans)</li>
+                <li>Consignee:</li>
+                <li>Beneficiary:</li>
+                <li>Green Activities Goods Code:</li>
+                <li>Discrepancies (SCO Approval required)</li>
+                <li>Exceeding limit by %</li>
+                <li>Others:</li>
+            </ul>
+        </td>
+    </tr>
+</table>
 
-            // Adding cells and contenteditable fields
-            const selectCell = newRow.insertCell(0);
-            selectCell.innerHTML = '<input type="checkbox">';
+<!-- Approval Section -->
+<table>
+    <tr>
+        <td class="small-text">ITB MO</td>
+        <td class="small-text">Prepared</td>
+        <td class="small-text">Checked</td>
+        <td class="small-text">Approved</td>
+        <td class="small-text">TRADE FINANCE</td>
+        <td class="small-text">Approved</td>
+        <td class="small-text">TREASURY</td>
+        <td class="small-text">Confirmed</td>
+        <td class="small-text">CREDIT</td>
+        <td class="small-text">Checked</td>
+        <td class="small-text">SCO Approval (for discrepancies)</td>
+        <td class="small-text">Operations Processed</td>
+    </tr>
+</table>
 
-            const nameCell = newRow.insertCell(1);
-            nameCell.contentEditable = "true";
-            nameCell.innerText = "New Name";
-
-            const emailCell = newRow.insertCell(2);
-            emailCell.contentEditable = "true";
-            emailCell.innerText = "new@example.com";
-
-            const phoneCell = newRow.insertCell(3);
-            phoneCell.contentEditable = "true";
-            phoneCell.innerText = "000-000-0000";
-
-            const addressCell = newRow.insertCell(4);
-            addressCell.contentEditable = "true";
-            addressCell.innerText = "New Address";
-
-            const dateCell = newRow.insertCell(5);
-            dateCell.contentEditable = "true";
-            dateCell.innerText = "2024-08-20";
-
-            const statusCell = newRow.insertCell(6);
-            statusCell.contentEditable = "true";
-            statusCell.innerText = "Status";
-
-            const actionCell = newRow.insertCell(7);
-            actionCell.innerHTML = '<span class="delete-btn material-icons">delete</span>';
-
-            // Add event listener to the new delete button
-            actionCell.querySelector('.delete-btn').addEventListener('click', function() {
-                table.deleteRow(newRow.rowIndex - 1);
-            });
-        });
-
-        // Add event listeners to existing delete buttons
-        document.querySelectorAll('.delete-btn').forEach(function(deleteBtn) {
-            deleteBtn.addEventListener('click', function() {
-                const row = deleteBtn.parentNode.parentNode;
-                row.parentNode.removeChild(row);
-            });
-        });
-    </script>
+<!-- OBU Section -->
+<table>
+    <tr>
+        <td colspan="12" class="small-text">OBU LOCAL REGULATORY LIMIT CONTROL</td>
+    </tr>
+    <tr>
+        <td colspan="12" class="small-text">Type of Credit Extents</td>
+    </tr>
+</table>
 
 </body>
 </html>
