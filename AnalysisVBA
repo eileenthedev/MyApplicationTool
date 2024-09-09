@@ -1,0 +1,22 @@
+Sub CombineColumns()
+    Dim ws As Worksheet
+    Dim lastRow As Long, lastCol As Long
+    Dim i As Long, j As Long
+    Dim resultRow As Long
+    
+    Set ws = ThisWorkbook.Sheets("Sheet1") 'Change to your sheet name
+    
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+    lastCol = ws.Cells(1, ws.Columns.Count).End(xlToLeft).Column
+    
+    resultRow = 1
+    
+    For i = 1 To lastRow
+        For j = 1 To lastCol
+            If ws.Cells(i, j).Value <> "" Then
+                ws.Cells(resultRow, lastCol + 2).Value = ws.Cells(i, j).Value
+                resultRow = resultRow + 1
+            End If
+        Next j
+    Next i
+End Sub
