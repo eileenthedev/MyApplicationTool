@@ -1,0 +1,97 @@
+Sub GetWorkItemsFromChangeset()
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim changesetNumber As String
+    Dim azureDevOpsURL As String
+    Dim patToken As String
+    Dim i As Long
+    Dim jsonResponse As String
+    Dim jsonObject As Object
+    Dim workItems As Object
+    Dim workItemId As Variant
+    Dim apiURL As String
+    Dim changesetColumn As Integer
+    Dim workItemColumn As Integer
+    Dim responseText As String
+    
+    ' Define your Azure DevOps parameters
+    azureDevOpsURL = "https://dev.azure.com/yourorganization/yourproject/_apis"
+    patToken = "your-personal-access-token"  ' Replace with your PAT
+    changesetColumn = 1  ' Assuming changeset numbers are in column A
+    workItemColumn = 2   ' Column where work items will be listed
+    
+    ' Set the worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1")
+    
+    ' Find the last row with data in the changeset column
+    lastRow = ws.Cells(ws.Rows.Count, changesetColumn).End(xlUp).Row
+    
+    ' Loop through each changeset number and get work items
+    For i = 2 To lastRow ' Assuming headers in row 1
+        changesetNumber = ws.Cells(i, changesetColumn).Value
+        
+        ' Construct the API URL for the changeset
+        apiURL = azureDevOpsURL & "/tfvc/changesets/" & changesetNumber & "/workitems?api-version=6.0"
+        
+        ' Call the API and get the response
+        jsonResponse = CallAzureDevOpsAPI(apiURL, patToken)
+        
+        ' Parse the JSON response
+        If jsonResponse <> "" Then
+            Set jsonObject = JsonConverter.ParseJson(jsonResponse)
+            Set workItems = jsonObject("value")
+            
+            ' List work items in the Excel sheet
+            If Not workItems Is Nothing Then
+                For Each workItem In workItems
+                    ws.Cells(i, workItemColumn).Value = workItem("id")
+                Next workItem
+            Else
+                ws.Cells(i, workItemColumn).Value = "No work items"
+            End If
+        Else
+            ws.Cells(i, workItemColumn).Value = "Error fetching data"
+        End If
+    Next i
+End Sub
+
+' Function to call Azure DevOps API
+Function CallAzureDevOpsAPI(url As String, patToken As String) As String
+    Dim http As Object
+    Set http = CreateObject("MSXML2.XMLHTTP")
+    
+    ' Make the request
+    http.Open "GET", url, False
+    http.setRequestHeader "Authorization", "Basic " & Base64Encode(":" & patToken)
+    http.setRequestHeader "Content-Type", "application/json"
+    
+    ' Send the request and get the response
+    http.Send
+    If http.Status = 200 Then
+        CallAzureDevOpsAPI = http.responseText
+    Else
+        CallAzureDevOpsAPI = ""
+    End If
+End Function
+
+' Function to base64 encode the PAT for authentication
+Function Base64Encode(text As String) As String
+    Dim bytes() As Byte
+    Dim base64Encoded As String
+    
+    bytes = StrConv(text, vbFromUnicode)
+    base64Encoded = EncodeBase64(bytes)
+    Base64Encode = base64Encoded
+End Function
+
+' Function to encode bytes to Base64
+Function EncodeBase64(bytes() As Byte) As String
+    Dim xml As Object
+    Set xml = CreateObject("MSXML2.DOMDocument")
+    
+    Dim node As Object
+    Set node = xml.createElement("base64")
+    node.DataType = "bin.base64"
+    node.nodeTypedValue = bytes
+    EncodeBase64 = node.Text
+End Function
