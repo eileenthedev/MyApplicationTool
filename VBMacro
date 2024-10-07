@@ -1,59 +1,48 @@
-Sub GetWorkItemsFromChangeset()
-    Dim ws As Worksheet
-    Dim lastRow As Long
-    Dim changesetNumber As String
+Function GetWorkItemsForChangeset(changesetNumber As String) As String
     Dim azureDevOpsURL As String
     Dim patToken As String
-    Dim i As Long
+    Dim apiURL As String
     Dim jsonResponse As String
     Dim jsonObject As Object
     Dim workItems As Object
     Dim workItemId As Variant
-    Dim apiURL As String
-    Dim changesetColumn As Integer
-    Dim workItemColumn As Integer
-    Dim responseText As String
+    Dim workItemsList As String
     
     ' Define your Azure DevOps parameters
     azureDevOpsURL = "https://dev.azure.com/yourorganization/yourproject/_apis"
     patToken = "your-personal-access-token"  ' Replace with your PAT
-    changesetColumn = 1  ' Assuming changeset numbers are in column A
-    workItemColumn = 2   ' Column where work items will be listed
     
-    ' Set the worksheet
-    Set ws = ThisWorkbook.Sheets("Sheet1")
+    ' Construct the API URL for the changeset
+    apiURL = azureDevOpsURL & "/tfvc/changesets/" & changesetNumber & "/workitems?api-version=6.0"
     
-    ' Find the last row with data in the changeset column
-    lastRow = ws.Cells(ws.Rows.Count, changesetColumn).End(xlUp).Row
+    ' Call the API and get the response
+    jsonResponse = CallAzureDevOpsAPI(apiURL, patToken)
     
-    ' Loop through each changeset number and get work items
-    For i = 2 To lastRow ' Assuming headers in row 1
-        changesetNumber = ws.Cells(i, changesetColumn).Value
+    ' Parse the JSON response
+    If jsonResponse <> "" Then
+        Set jsonObject = JsonConverter.ParseJson(jsonResponse)
+        Set workItems = jsonObject("value")
         
-        ' Construct the API URL for the changeset
-        apiURL = azureDevOpsURL & "/tfvc/changesets/" & changesetNumber & "/workitems?api-version=6.0"
-        
-        ' Call the API and get the response
-        jsonResponse = CallAzureDevOpsAPI(apiURL, patToken)
-        
-        ' Parse the JSON response
-        If jsonResponse <> "" Then
-            Set jsonObject = JsonConverter.ParseJson(jsonResponse)
-            Set workItems = jsonObject("value")
+        ' If there are work items, concatenate their IDs
+        If Not workItems Is Nothing Then
+            For Each workItem In workItems
+                workItemsList = workItemsList & workItem("id") & ", "
+            Next workItem
             
-            ' List work items in the Excel sheet
-            If Not workItems Is Nothing Then
-                For Each workItem In workItems
-                    ws.Cells(i, workItemColumn).Value = workItem("id")
-                Next workItem
-            Else
-                ws.Cells(i, workItemColumn).Value = "No work items"
+            ' Remove the trailing comma and space
+            If Len(workItemsList) > 2 Then
+                workItemsList = Left(workItemsList, Len(workItemsList) - 2)
             End If
         Else
-            ws.Cells(i, workItemColumn).Value = "Error fetching data"
+            workItemsList = "No work items"
         End If
-    Next i
-End Sub
+    Else
+        workItemsList = "Error fetching data"
+    End If
+    
+    ' Return the list of work items or an error message
+    GetWorkItemsForChangeset = workItemsList
+End Function
 
 ' Function to call Azure DevOps API
 Function CallAzureDevOpsAPI(url As String, patToken As String) As String
