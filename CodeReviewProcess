@@ -1,0 +1,85 @@
+Here's a solution to enforce a **CI build blocker** if a check-in lacks a review indicator (e.g., a comment like `Reviewed-by: [User]`) or a work item link. This uses Azure DevOps Server (on-prem) features like **check-in policies**, **custom build validation scripts**, and **TFVC triggers**:
+
+---
+
+### **1. Check-in Policy (Client-Side Enforcement)**
+Configure a check-in policy to require:
+- **Check-in comments** with a keyword (e.g., `Reviewed-by: [User]`).
+- **Work item association** (to ensure traceability).
+
+**Steps**:
+1. Install [Team Foundation Power Tools](https://learn.microsoft.com/en-us/azure/devops/server/install/install-tfs-power-tools?view=azure-devops-2020) for custom check-in policies.
+2. Create a **custom check-in policy** (using a simple regex) to validate check-in comments:
+   ```plaintext
+   Regex pattern: ^.*Reviewed-by:\s\w+.*WorkItem:\s\d+.*$
+   ```
+   This ensures comments include both a reviewer and a work item ID.
+
+---
+
+### **2. CI Build Validation (Server-Side Blocker)**
+Create a **gated check-in build** that fails if the check-in comment doesn’t include the required review/work item info.
+
+**PowerShell Script** (`Check-CommentValidation.ps1`):
+```powershell
+# Fetch the latest changeset comment from the pending check-in
+$comment = "$ENV:TF_BUILD_SOURCEGETVERSIONMESSAGE"
+
+# Check if the comment contains "Reviewed-by" and "WorkItem:"
+if (-not ($comment -match "Reviewed-by:\s\w+" -and $comment -match "WorkItem:\s\d+")) {
+  Write-Host "##vso[task.logissue type=error] Check-in blocked: Comment must include 'Reviewed-by: [User]' and 'WorkItem: [ID]'."
+  exit 1
+}
+```
+
+**Build Pipeline Setup**:
+1. Add a **gated check-in build** for your main branch.
+2. Add a **PowerShell task** to run `Check-CommentValidation.ps1` as the first step.
+3. Configure the build to **fail fast** if the script exits with an error.
+
+---
+
+### **3. Workflow for Developers**
+```
+Developer Workflow:
+1. Make code changes locally.
+2. Get code reviewed by a teammate.
+3. Check-in with a comment like:
+   "Reviewed-by: JohnDoe, WorkItem: 1234 - Fix login timeout."
+4. CI build automatically validates the comment format and work item link.
+5. If validation passes, code is checked in. If not, check-in is blocked.
+```
+
+---
+
+### **4. Fallback for Older Azure DevOps Versions**
+If custom check-in policies aren’t supported, use a **pre-commit script** (run locally via client-side hooks):
+```powershell
+# PreCommitValidation.ps1
+$comment = (Get-Content -Path ".\pending_changes.txt") | Out-String
+if (-not ($comment -match "Reviewed-by:\s\w+" -and $comment -match "WorkItem:\s\d+")) {
+  Write-Host "ERROR: Comment must include 'Reviewed-by: [User]' and 'WorkItem: [ID]'."
+  exit 1
+}
+```
+Instruct developers to run this script manually before check-in.
+
+---
+
+### **5. Reporting and Monitoring**
+Use Azure DevOps **queries/dashboards** to track:
+- Failed builds due to missing reviews.
+- Work items without linked check-ins.
+
+---
+
+### **Minimal Setup Summary**
+| **Component**       | **Tool**                          | **Purpose**                                      |
+|----------------------|-----------------------------------|--------------------------------------------------|
+| Check-in Policy      | Team Foundation Power Tools       | Enforce comment format client-side.              |
+| CI Build Validation  | Azure DevOps Gated Check-in       | Block check-ins with invalid comments.           |
+| Work Item Linking    | Built-in TFVC Work Item Association | Ensure traceability.                             |
+
+---
+
+This ensures every check-in has a lightweight review record and links to a work item, with minimal disruption. Adjust the regex pattern to match your team’s conventions.
