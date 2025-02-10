@@ -80,6 +80,70 @@ Use Azure DevOps **queries/dashboards** to track:
 | CI Build Validation  | Azure DevOps Gated Check-in       | Block check-ins with invalid comments.           |
 | Work Item Linking    | Built-in TFVC Work Item Association | Ensure traceability.                             |
 
----
+-----------------------------
 
-This ensures every check-in has a lightweight review record and links to a work item, with minimal disruption. Adjust the regex pattern to match your team’s conventions.
+This ensures every check-in has a lightweight review record and links to a work item, with minimal disruption.
+
+If you can raise code review requests inside Azure DevOps, but without PRs/MRs, here’s a simple and lightweight process to ensure structured reviews while minimizing overhead.
+
+1. Key Guidelines
+	•	Scope: SQL-related changes (queries, stored procedures, indexing, etc.).
+	•	Goal: Improve code quality, performance, and security without delaying development.
+	•	Time Limit: Each review should be completed within 1-2 days.
+	•	Review Method: Use Azure DevOps Code Review Requests instead of PRs.
+
+2. Roles & Responsibilities
+	•	Author (Developer): Writes the SQL code and submits a Code Review Request.
+	•	Reviewer (Peer or Lead): Reviews the code for correctness, performance, security, and best practices.
+	•	Approver (if needed): A senior developer or DBA for complex or high-impact changes.
+
+3. What Should Be Reviewed? (Checklist)
+
+✔ Correctness: Does the SQL logic achieve the intended result?
+✔ Performance: Are indexes used properly? Any slow queries?
+✔ Security: Are there SQL injection risks? Are permissions properly set?
+✔ Readability & Maintainability: Is the code formatted and structured well?
+✔ Standards: Does it follow team naming conventions and best practices?
+
+4. Step-by-Step Code Review Process in Azure DevOps
+
+Step 1: Developer Creates a Code Review Request
+	1.	Write and test the SQL script.
+	2.	Navigate to Azure DevOps → Code → Code Review Requests.
+	3.	Create a new Code Review Request and attach the SQL script.
+	4.	Add a clear description explaining the change, impact, and key areas for review.
+	5.	Assign at least one reviewer and submit the request.
+
+Step 2: Reviewer Checks the Code
+	1.	Open the Code Review Request in Azure DevOps.
+	2.	Review the SQL script against the checklist.
+	3.	Provide comments directly in Azure DevOps (or discuss in chat if needed).
+	4.	If minor changes are required, the author updates the script.
+	5.	If major issues are found, schedule a quick discussion (Teams or chat).
+
+Step 3: Approval and Deployment
+	1.	Once approved, the reviewer marks the request as “Approved”.
+	2.	The developer deploys the script following the normal process.
+	3.	(Optional) Keep a record of approved scripts in a shared folder or track reviews in Azure DevOps.
+
+5. Additional Best Practices
+
+✅ Use a Standard Code Review Template – Define a format for review requests (e.g., what changed, why, risks).
+✅ Limit Review Size – Smaller scripts are easier to review than large ones.
+✅ Automate Where Possible – Consider SQL formatters and performance analyzers to catch basic issues.
+✅ Rotate Reviewers – Encourage peer reviews to distribute knowledge.
+✅ Provide Regular Feedback – Track common mistakes and organize mini knowledge-sharing sessions.
+
+What This Process Solves:
+
+✔ Uses existing Azure DevOps features – No need for PRs/MRs.
+✔ Lightweight & simple – No heavy bureaucracy.
+✔ Focuses on key quality aspects – Performance, security, readability.
+✔ Ensures accountability – Clear assignments and approvals.
+
+Would you like a standard template for Code Review Requests in Azure DevOps to keep things consistent?
+
+
+
+
+ Adjust the regex pattern to match your team’s conventions.
